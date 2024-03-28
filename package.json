@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "test": "mocha tests/authenticate.test.js"
+  },
+  "devDependencies": {
+    "mocha": "^10.4.0",
+    "pactum": "^3.6.3"
+  },
+  "dependencies": {
+    "chai": "^5.1.0"
+  }
+}
