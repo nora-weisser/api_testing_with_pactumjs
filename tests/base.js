@@ -1,5 +1,6 @@
 const { request, reporter } = require('pactum');
 const addContext = require('mochawesome/addContext');
+require('dotenv').config()
 
 const awesome_reporter = {
   afterSpec(spec) {
@@ -24,7 +25,7 @@ const awesome_reporter = {
 };
 
 before(() => {
-  request.setBaseUrl('https://restful-booker.herokuapp.com');
+  request.setBaseUrl(process.env.BASE_URL);
 });
 
 after(() => {
