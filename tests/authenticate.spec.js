@@ -1,22 +1,63 @@
-const { spec } = require('pactum');
-const { like } = require('pactum-matchers');
-require('dotenv').config()
+import pkg from 'pactum';
+const { spec, stash } = pkg;
+
+import { like } from 'pactum-matchers';
+import { faker } from '@faker-js/faker/locale/en';
+import dotenv from 'dotenv';
+dotenv.config();
+
+
+/**
+ * stash.addDataTemplate({
+    ExistingUser: {
+        username: process.env.USERNAME,
+        password: process.env.PASSWORD,
+    },
+    NonExistingUser: {
+        username: faker.internet.username(),
+        password: faker.internet.password(),
+    }
+});
+ */
+
 
 describe('/authenticate', () => {
-    it('POST: should get a response and status code of 200, when credentials are correct', async () => {
-        const ctx = this;
+    it.only('POST with existing username and valid password', async () => {
         await spec()
-            .post('/auth')
+            .post('/auth/login')
             .inspect()
             .withHeaders('Content-Type', 'application/json')
             .withJson({
-                "username": process.env.USERNAME,
-                "password": process.env.PASSWORD
+                '@DATA:TEMPLATE@': 'ExistingUser'
             })
             .expectStatus(200)
             .expectJsonMatch({
                 "token": like("some-token")
             })
-            .records('mocha', ctx);
+    })
+
+    it.only('POST with existing username and invalid password', async () => {
+        await spec()
+            .post('/auth/login')
+            .inspect()
+            .withHeaders('Content-Type', 'application/json')
+            .withJson({
+                '@DATA:TEMPLATE@': 'ExistingUser',
+                '@OVERRIDES@': {
+                    'password': faker.internet.password()
+                  }
+            })
+            .expectStatus(401)
+    })
+
+    it('POST with non-existing username and password', async () => {
+        await spec()
+            .post('/auth/login')
+            .inspect()
+            .withHeaders('Content-Type', 'application/json')
+            .withJson({
+                '@DATA:TEMPLATE@': 'NonExistingUser'
+            })
+            .expectStatus(401)
     })
 })
