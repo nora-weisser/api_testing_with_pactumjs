@@ -22,7 +22,7 @@ dotenv.config();
 
 
 describe('/authenticate', () => {
-    it.only('POST with existing username and valid password', async () => {
+    it('POST with existing username and valid password', async () => {
         await spec()
             .post('/auth/login')
             .inspect()
@@ -36,7 +36,7 @@ describe('/authenticate', () => {
             })
     })
 
-    it.only('POST with existing username and invalid password', async () => {
+    it('POST with existing username and invalid password', async () => {
         await spec()
             .post('/auth/login')
             .inspect()
