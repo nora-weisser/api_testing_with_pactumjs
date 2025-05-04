@@ -1,9 +1,9 @@
 import pkg from 'pactum';
 const { spec, stash } = pkg;
 
-import { like } from 'pactum-matchers';
 import { faker } from '@faker-js/faker/locale/en';
 import dotenv from 'dotenv';
+import { authenticationSchema } from '../helpers/datafactory/schemas/authentication.schema.js';
 dotenv.config();
 
 
@@ -31,9 +31,7 @@ describe('/authenticate', () => {
                 '@DATA:TEMPLATE@': 'ExistingUser'
             })
             .expectStatus(200)
-            .expectJsonMatch({
-                "token": like("some-token")
-            })
+            .expectJsonSchema(authenticationSchema)
     })
 
     it('POST with existing username and invalid password', async () => {
@@ -48,6 +46,7 @@ describe('/authenticate', () => {
                   }
             })
             .expectStatus(401)
+            .expectJsonMatch('error', 'Invalid credentials')
     })
 
     it('POST with non-existing username and password', async () => {
@@ -59,5 +58,6 @@ describe('/authenticate', () => {
                 '@DATA:TEMPLATE@': 'NonExistingUser'
             })
             .expectStatus(401)
+            .expectJsonMatch('error', 'Invalid credentials')
     })
 })
