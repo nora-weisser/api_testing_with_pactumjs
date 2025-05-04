@@ -12,7 +12,7 @@ describe('GET All Bookings', () => {
     });
 
 
-    it.only('GET: All Rooms', async () => {
+    it('GET: All Rooms', async () => {
 
         await spec()
             .get('/room')
