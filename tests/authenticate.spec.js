@@ -26,7 +26,6 @@ describe('/authenticate', () => {
         await spec()
             .post('/auth/login')
             .inspect()
-            .withHeaders('Content-Type', 'application/json')
             .withJson({
                 '@DATA:TEMPLATE@': 'ExistingUser'
             })
@@ -38,7 +37,6 @@ describe('/authenticate', () => {
         await spec()
             .post('/auth/login')
             .inspect()
-            .withHeaders('Content-Type', 'application/json')
             .withJson({
                 '@DATA:TEMPLATE@': 'ExistingUser',
                 '@OVERRIDES@': {
@@ -53,7 +51,6 @@ describe('/authenticate', () => {
         await spec()
             .post('/auth/login')
             .inspect()
-            .withHeaders('Content-Type', 'application/json')
             .withJson({
                 '@DATA:TEMPLATE@': 'NonExistingUser'
             })
