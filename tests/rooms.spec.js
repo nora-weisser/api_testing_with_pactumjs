@@ -7,7 +7,6 @@ describe('GET All Rooms', () => {
 
         await spec()
             .get('/room')
-            .withHeaders('Content-Type', 'application/json')
             .expectStatus(200)
     })
 })
@@ -17,7 +16,6 @@ describe('POST Create a New Room', () => {
     beforeEach(async () => {
         await spec()
             .post('/auth/login')
-            .withHeaders('Content-Type', 'application/json')
             .withJson({
                 '@DATA:TEMPLATE@': 'ExistingUser'
             }).stores('token', 'token')
@@ -28,11 +26,10 @@ describe('POST Create a New Room', () => {
         await spec()
             .post('/room')
             .inspect()
-            .withHeaders('Content-Type', 'application/json')
             .withHeaders('Cookie', 'token=$S{token}')
             .withJson({ '@DATA:TEMPLATE@': 'RandomRoom' })
             .expectStatus(200)
-            .expectBody({
+            .expectJson({
                 "success": true
             })
 
@@ -41,14 +38,12 @@ describe('POST Create a New Room', () => {
         await spec()
             .get('/room')
             .inspect()
-            .withHeaders('Content-Type', 'application/json')
             .expectStatus(200)
             .stores('roomId', `rooms[roomName=${roomName}].roomid`);
 
         await spec()
             .get(`/room/$S{roomId}`)
             .inspect()
-            .withHeaders('Content-Type', 'application/json')
             .expectStatus(200)
             .expectJson('roomName', roomName);
     })
@@ -57,7 +52,6 @@ describe('POST Create a New Room', () => {
         await spec()
             .delete('/room/$S{roomId}')
             .inspect()
-            .withHeaders('Content-Type', 'application/json')
             .withHeaders('Cookie', 'token=$S{token}')
     });
 

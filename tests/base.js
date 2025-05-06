@@ -7,6 +7,7 @@ const { request } = pactum;
 
 before(() => {
   request.setBaseUrl(process.env.BASE_URL);
+  request.setDefaultHeaders('Content-Type', 'application/json');
   registerAllDataTemplates(); 
 });
 
