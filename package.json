@@ -1,7 +1,8 @@
 {
   "main": "base.js",
   "scripts": {
-    "test": "mocha tests --reporter mochawesome --reporter-options quiet=true,overwrite=true,html=true,json=false"
+    "test": "mocha tests --file setup/base.js ",
+    "test:report": "npm run test -- --reporter mochawesome"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.7.0",

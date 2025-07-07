@@ -8,7 +8,7 @@ const features = ['WiFi', 'Refreshment', 'TV', 'Safe', 'Radio', 'Views'];
 export function registerRoomTemplates() {
   stash.addDataTemplate({
     RandomRoom: {
-        roomName: faker.word.adjective() + '-' + faker.number.int({ min: 100, max: 999 }),
+        roomName: faker.number.int({ min: 100, max: 999 }).toString(),
         type: faker.helpers.arrayElement(roomType),
         description: faker.lorem.sentence(),
         accessible: faker.datatype.boolean(),
