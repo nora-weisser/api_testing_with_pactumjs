@@ -33,7 +33,7 @@ describe('POST Create a New Room', () => {
                 "success": true
             })
 
-        const roomName = stash.getDataTemplate().RandomRoom.roomName;
+        const roomName = stash.getDataTemplate('RandomRoom').roomName;
 
         await spec()
             .get('/room')
